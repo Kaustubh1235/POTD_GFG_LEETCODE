@@ -1,0 +1,27 @@
+class Solution {
+
+public:
+int longestKSubstr(string s, int k) {
+    unordered_map<char, int> mpp;
+    int left = 0, maxLen = 0;
+
+    for (int right = 0; right < s.length(); right++) {
+        mpp[s[right]]++;
+
+        while (mpp.size() > k) {
+            mpp[s[left]]--;
+            if (mpp[s[left]] == 0) {
+                mpp.erase(s[left]);
+            }
+            left++;
+        }
+
+        if (mpp.size() == k) {
+            maxLen = max(maxLen, right - left + 1);
+        }
+    }
+
+    return maxLen == 0 ? -1 : maxLen;
+}
+
+};
